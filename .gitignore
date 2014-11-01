@@ -14,7 +14,9 @@
 *.lkshs
 
 # Intellij IDEA
-/.idea
+/.idea/workspace.xml
+/.idea/ant.xml
+/.idea/*
 
 # darcs
 /_darcs
