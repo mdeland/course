@@ -63,7 +63,10 @@ the contents of c
 main ::
   IO ()
 main =
-  error "todo: Course.FileIO#main"
+  getArgs >>= \args ->
+    case args of
+      fn :. Nil -> run fn
+      _ -> putStrLn "bad call"
 
 type FilePath =
   Chars
@@ -72,31 +75,39 @@ type FilePath =
 run ::
   Chars
   -> IO ()
-run =
-  error "todo: Course.FileIO#run"
+run fn =
+  do
+    content <- readFile fn
+    results <- getFiles (lines content)
+    printFiles results
 
 getFiles ::
   List FilePath
   -> IO (List (FilePath, Chars))
-getFiles =
-  error "todo: Course.FileIO#getFiles"
+getFiles fns =
+  sequence (map getFile fns)
 
 getFile ::
   FilePath
   -> IO (FilePath, Chars)
-getFile =
-  error "todo: Course.FileIO#getFile"
+getFile fn =
+  do
+    content <- readFile fn
+    return (fn, content)
 
 printFiles ::
   List (FilePath, Chars)
   -> IO ()
-printFiles =
-  error "todo: Course.FileIO#printFiles"
+printFiles xs =
+  do
+    void $ sequence $ map (\(fn, cs) -> printFile fn cs) xs
 
 printFile ::
   FilePath
   -> Chars
   -> IO ()
-printFile =
-  error "todo: Course.FileIO#printFile"
+printFile fn cs =
+  do
+    putStrLn ("============ " ++ fn)
+    putStrLn cs
 
